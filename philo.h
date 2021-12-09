@@ -6,7 +6,7 @@
 /*   By: otaouil <otaouil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 16:03:14 by otaouil           #+#    #+#             */
-/*   Updated: 2021/12/07 04:12:00 by otaouil          ###   ########.fr       */
+/*   Updated: 2021/12/09 22:16:08 by otaouil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_philo
 	unsigned int	t_stop_eat;
 	int				fork;
 	int				fork1;
+	unsigned int	t0;
 	struct s_philo	*next;
 	t_all			*data;
 }				t_philo;
@@ -51,7 +52,6 @@ typedef struct s_all
 	pthread_mutex_t	lock;
 	pthread_mutex_t	lk;
 	unsigned int	t_to_sleep;
-	unsigned int	t0;
 	int				i;
 	unsigned int	t_to_die;
 	unsigned int	t_to_eat;

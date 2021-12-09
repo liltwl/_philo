@@ -6,7 +6,7 @@
 /*   By: otaouil <otaouil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 03:50:11 by otaouil           #+#    #+#             */
-/*   Updated: 2021/12/07 04:16:22 by otaouil          ###   ########.fr       */
+/*   Updated: 2021/12/09 23:14:18 by otaouil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_philo_init(t_all *data, int *i, t_philo *philo)
 	philo->data = data;
 	philo->fork = 0;
 	philo->fork1 = 0;
+	philo->t0 = 0;
 	philo->t_stop_eat = get_time_mls();
 	philo->next = NULL;
 	ft_lstadd_back(&data->philo, philo);
@@ -66,7 +67,6 @@ int	ft_init(int ac, char **av, t_all *data)
 	data->t_to_eat = ft_atoi(av[3]);
 	data->t_to_sleep = ft_atoi(av[4]);
 	data->i = 1;
-	data->t0 = get_time_mls();
 	if (pthread_mutex_init(&data->lk, NULL) != 0)
 		ft_print("error :\nmutex init failed", NULL, 0, 6);
 	pthread_mutex_lock(&data->lk);
@@ -86,8 +86,9 @@ void	ft_philoinit(t_philo *philo, t_all *data)
 	fork = get_fork(data, philo->id + 1);
 	fork->new_philo = philo->id;
 	philo->statu = 1;
+	philo->fork = 1;
+	philo->fork1 = 1;
 	philo->t_eat++;
-	philo->t_stop_eat = get_time_mls();
-	ft_print("has taken a fork", philo, get_time_mls(), 1);
-	ft_print("has taken a fork", philo, get_time_mls(), 1);
+	ft_print("has taken a fork", philo, 0, 1);
+	ft_print("has taken a fork", philo, 0, 1);
 }

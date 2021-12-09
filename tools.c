@@ -6,7 +6,7 @@
 /*   By: otaouil <otaouil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 03:53:47 by otaouil           #+#    #+#             */
-/*   Updated: 2021/12/07 04:14:04 by otaouil          ###   ########.fr       */
+/*   Updated: 2021/12/09 22:31:11 by otaouil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_print(char *str, t_philo *philo, unsigned int i, int w)
 		pthread_mutex_lock(&philo->data->lock);
 	if (w != 6 && w != 7)
 	{
-		ft_putnbr_fd(i - philo->data->t0, 1);
+		ft_putnbr_fd(i - philo->t0, 1);
 		write(1, " ", 1);
 		ft_putnbr_fd((unsigned int)philo->id, 1);
 		write(1, " ", 1);
@@ -26,7 +26,7 @@ void	ft_print(char *str, t_philo *philo, unsigned int i, int w)
 	write(1, str, strlen(str));
 	write(1, "\n", 1);
 	if (w == 7 || w == 6)
-		exit(15);
+		exit(1);
 	if (str[0] != 'd')
 		pthread_mutex_unlock(&philo->data->lock);
 }
@@ -34,10 +34,8 @@ void	ft_print(char *str, t_philo *philo, unsigned int i, int w)
 unsigned int	get_time_mls(void)
 {
 	struct timeval	time;
-	unsigned int	i;
 
 	gettimeofday(&time, NULL);
-	i = (unsigned int)time.tv_sec;
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 

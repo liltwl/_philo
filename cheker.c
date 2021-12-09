@@ -6,7 +6,7 @@
 /*   By: otaouil <otaouil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 03:58:38 by otaouil           #+#    #+#             */
-/*   Updated: 2021/12/07 04:13:30 by otaouil          ###   ########.fr       */
+/*   Updated: 2021/12/09 23:16:23 by otaouil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,26 @@ int	is_readyto_eat(t_all *data, t_philo *philo)
 	t_fork	*fork1;
 
 	fork = get_fork(data, philo->id);
-	pthread_mutex_lock(&fork->flock);
-	if (fork->new_philo == -1)
+	if (fork->new_philo == -1 && !philo->fork)
 	{
+	pthread_mutex_lock(&fork->flock);
 		philo->fork = 1;
 		ft_print("has taken a fork", philo, get_time_mls(), 1);
 		fork->new_philo = philo->id;
-	}
 	pthread_mutex_unlock(&fork->flock);
+	}
 	if (philo->id == data->philo_num)
 		fork1 = get_fork(data, 1);
 	else
 		fork1 = get_fork(data, philo->id + 1);
-	pthread_mutex_lock(&fork1->flock);
-	if (fork1->new_philo == -1)
+	if (fork1->new_philo == -1 && !philo->fork1)
 	{
+	pthread_mutex_lock(&fork1->flock);
 		ft_print("has taken a fork", philo, get_time_mls(), 1);
 		philo->fork1 = 1;
 		fork1->new_philo = philo->id;
-	}
 	pthread_mutex_unlock(&fork1->flock);
+	}
 	return (philo->fork1 && philo->fork);
 }
 
@@ -59,8 +59,8 @@ void	ft_checkstatus(t_philo *philo, t_all *data)
 {
 	if (philo->statu == 1)
 	{
-		ft_print("is eating", philo, get_time_mls(), 1);
 		philo->t_stop_eat = get_time_mls();
+		ft_print("is eating", philo, get_time_mls(), 1);
 		smart_sleep(philo->data->t_to_eat, philo, data);
 	}
 	else if (philo->statu == 2)
@@ -77,8 +77,7 @@ void	is_philo_dead(t_philo *philo, t_all *data)
 	t_philo	*phi;
 
 	phi = data->philo;
-	if (philo && (get_time_mls() - philo->t_stop_eat)
-		* !(!philo->t_stop_eat) >= data->t_to_die)
+	if (philo && (get_time_mls() - philo->t_stop_eat) >= data->t_to_die)
 	{
 		ft_print("died", philo, get_time_mls(), 1);
 		data->i = 0;

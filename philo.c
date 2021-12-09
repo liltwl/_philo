@@ -6,7 +6,7 @@
 /*   By: otaouil <otaouil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 04:09:13 by otaouil           #+#    #+#             */
-/*   Updated: 2021/12/07 04:16:40 by otaouil          ###   ########.fr       */
+/*   Updated: 2021/12/09 22:54:54 by otaouil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,20 @@ void	ft_philo(t_all *data)
 	philo = data->philo;
 	while (philo)
 	{
+		usleep(20);
 		if (data->philo_num == 1)
 		{
 			get_fork(data, philo->id)->new_philo = philo->id;
 			philo->statu = 0;
-			ft_print("has taken a fork", philo, get_time_mls(), 1);
+			ft_print("has taken a fork", philo, 0, 1);
 		}
-		else if (philo->id % 2 == 1 && data->philo_num >= philo->id + 1)
+		else if (philo->id % 2 != 0 && data->philo_num != philo->id)
 			ft_philoinit(philo, data);
 		else
 			philo->statu = 0;
+			ft_print("can't create thread", philo, 0, 1);
+		philo->t0 = get_time_mls();
+		philo->t_stop_eat = get_time_mls();
 		err = pthread_create(&philo->trd_id, NULL, &ft_start, philo);
 		if (err != 0)
 			ft_print("can't create thread", NULL, 0, 6);
