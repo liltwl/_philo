@@ -6,7 +6,7 @@
 /*   By: otaouil <otaouil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 03:50:11 by otaouil           #+#    #+#             */
-/*   Updated: 2021/12/09 23:14:18 by otaouil          ###   ########.fr       */
+/*   Updated: 2021/12/14 09:07:55 by otaouil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,10 @@ void	ft_philoinit(t_philo *philo, t_all *data)
 
 	fork = get_fork(data, philo->id);
 	fork->new_philo = philo->id;
+	pthread_mutex_lock(&fork->flock);
 	fork = get_fork(data, philo->id + 1);
 	fork->new_philo = philo->id;
+	pthread_mutex_lock(&fork->flock);
 	philo->statu = 1;
 	philo->fork = 1;
 	philo->fork1 = 1;

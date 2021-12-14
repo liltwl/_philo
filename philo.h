@@ -6,7 +6,7 @@
 /*   By: otaouil <otaouil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 16:03:14 by otaouil           #+#    #+#             */
-/*   Updated: 2021/12/09 22:16:08 by otaouil          ###   ########.fr       */
+/*   Updated: 2021/12/14 09:39:31 by otaouil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_all
 	pthread_mutex_t	lk;
 	unsigned int	t_to_sleep;
 	int				i;
+	int				x;
 	unsigned int	t_to_die;
 	unsigned int	t_to_eat;
 	int				t_must_eat;
@@ -77,7 +78,7 @@ int				is_readyto_eat(t_all *data, t_philo *philo);
 void			free_fork(t_all *data, t_philo *philo);
 void			ft_statu_up(t_philo *philo, t_all *data);
 void			is_philo_dead(t_philo *philo, t_all *data);
-void			smart_sleep(unsigned int time, t_philo *philo, t_all *data);
+void			smart_sleep(unsigned int time, t_all *data);
 void			ft_checkstatus(t_philo *philo, t_all *data);
 void			*ft_start(void *arg);
 void			ft_philoinit(t_philo *philo, t_all *data);
